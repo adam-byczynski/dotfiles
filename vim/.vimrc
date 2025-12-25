@@ -1,4 +1,24 @@
 " --------------------------------------------------------
+" ---------------------- Install Vim-Plug if not present --------
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" --------------------------------------------------------
+" ---------------------- Vim plugins  ----------------------
+" TODO after first launch:
+" - run ':PlugInstall'
+" More info: https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+
+Plug 'sainnhe/everforest'
+Plug 'preservim/nerdtree'
+
+call plug#end()
+
+" --------------------------------------------------------
 " ---------------------- NERDTree ----------------------
 " To download NERDTree checkout https://github.com/preservim/nerdtree
 
@@ -22,6 +42,38 @@ let NERDTreeShowHidden = 1
 " ---------------------- VIM config ----------------------
 scriptencoding utf-8
 set encoding=utf-8
+
+set guifont=IBMPlexMono-Regular:h14
+
+
+" --------------------------------------------------------
+" ---------------------- Set theme everforest  ----------------------
+if has('termguicolors')
+    set termguicolors
+endif
+
+" For dark version.
+set background=dark
+
+" For light version.
+" set background=light
+
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'hard'
+
+" For better performance
+let g:everforest_better_performance = 1
+
+colorscheme everforest
+
+" -------- SAVE AND RESTORE VIM SESSION --------
+" autocmd VimLeave * mksession! ~/.vim/session.vim
+" 
+" if filereadable(expand("~/.vim/session.vim"))
+"   autocmd VimEnter * ++nested source ~/.vim/session.vim
+" endif
 
 " more trouble than they're worth, really
 set nobackup
@@ -71,25 +123,25 @@ set nu
 " Highlight search matches
 set hlsearch
 
-" set default foldmethod
+" Set default foldmethod
 set foldmethod=indent "fold based on indent
 set foldnestmax=3 "deepest fold is 3 levels
 set nofoldenable "dont fold by default
 
-" automatically reload on external file change
+" Automatically reload on external file change
 set autoread
 
-" allow unsaved hidden buffers
+" Allow unsaved hidden buffers
 set hidden
 
-" round indents to multiple of shiftwidth
+" Round indents to multiple of shiftwidth
 set shiftround
 
-" show matching brackets
+" Show matching brackets
 set showmatch
 set matchtime=2
 
-" don't change directories when opening files from external
+" Don't change directories when opening files from external
 set noautochdir
 
 " turn on spell check
